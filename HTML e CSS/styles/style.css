@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Tilt+Neon&display=swap');
+
+:root{
+    --font-mae: 'Poppins', sans-serif;
+}
+
+body{
+    background-color:#13315C;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+}
+
+.conteiner {
+    display: flex;
+    width: 100%;
+    max-width:max-content;
+  }
+  
+.conteiner__login {
+    background-color: #f6f6f6;
+    font-family: var(--font-mae);
+    display: flex;
+    justify-content: flex-end;
+    border-radius: 32px;
+}
+
+.conteiner__input {
+    width: 560px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    margin: 0 auto;
+  }
+  
+  .login__nome__completo,
+  .login__senha {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .login__nome__completo__input,
+  .login__senha__input,
+  .login__botao {
+    width: 100%; 
+    max-width: 300px; 
+    padding: 10px;
+    margin-bottom: 10px; 
+  }
+
+  .login__nome__completo__input,
+  .login__senha__input{
+    border-radius: 32px;
+  }
+
+img{
+    width: 50%;
+    border-radius: 32px 0 0 32px;
+}
+
+.conteiner__login__titulo{
+    font-size: 26px;
+}
+
+.login__botao{
+    border-radius: 32px;
+    color: #f6f6f6;
+    background-color: #13315C;
+    text-align: center;
+}
