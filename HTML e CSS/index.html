@@ -9,22 +9,27 @@
 </head>
 
 <body>
-    <div class="conteiner">   
+    <div class="conteiner">
         <div class="conteiner__login">
             <img src=".\assets\Melhore logo! (1).png" alt="">
             <div class="conteiner__input">
                 <h1 class="conteiner__login__titulo">Crie uma conta para você</h1>
-                <label for="text" class="login__nome__completo">Nome completo</label>
-                <br>
-                 <input type="text" class="login__nome__completo__input" id="nome__completo" placeholder="Insira seu nome completo aqui">
-                <br>
-                <label for="text" class="login__senha">Senha</label>
-                <br>
-                <input type="text" class="login__senha__input" id="senha" placeholder="Insira sua senha">
-                <br>
-                <button class="login__botao" id="login__botao">Crie sua conta</button>
-            </div>  
+                <form name="myForm">
+                    <label for="text" class="login__nome__completo">Nome completo</label>
+                    <br>
+                    <input type="text" class="login__nome__completo__input" name="nome" id="nome__completo"
+                        placeholder="Insira seu nome completo aqui">
+                    <br>
+                    <label for="text" class="login__senha">Senha</label>
+                    <br>
+                    <input type="text" class="login__senha__input" nome="senha" id="senha" placeholder="Insira sua senha">
+                    <br>
+                    <button class="login__botao" id="login__botao" onclick="login()" >Crie sua conta</button>
+                </form>
+            </div>
         </div>
     </div>
+    <script src="./JS/principal.js"></script>
 </body>
-</html> 
+
+</html>
