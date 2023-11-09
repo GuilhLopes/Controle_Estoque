@@ -18,7 +18,6 @@ app.set('views', path.join(__dirname, '/views'));
 
 app.post('/', function(req,res){
 
-    console.log(req.body.password);
     if(req.body.password == senha && req.body.login == login ){
         req.session.login = login;
         res.redirect('/');
