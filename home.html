@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/styles/style.css">
+    <title>Home</title>
+</head>
+<body class="home">
+    <div class="home__div">
+        <h1 class="home__titulo">Gerenciamento de <strong>itens</strong></h1>
+        <form class="home__label">
+            <input type="text" name="item" class="item__label" placeholder="Adicione o item">
+            <input type="text" name="preco" class="item__label" placeholder="Adicione o valor">
+            <input type="submit" class="adiciona__botao" value="Adicionar">
+        </form>
+    </div>
+    <ul id="items">
+    </ul>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('form').on('submit', function (e) {
+                e.preventDefault();
+                var item = $('input[name="item"]').val();
+                $('#items').append('<li>' + item + ' <button class="delete">X</button></li>');
+                $('input[name="item"]').val('');
+            });
+            
+            $('#items').on('click', '.delete', function () {
+                $(this).parent().remove();
+            });
+        });
+    </script>
+
+
+</body>
+</html>
