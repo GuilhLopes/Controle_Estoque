@@ -108,13 +108,13 @@ img{
   align-items: center;
 }
 
-input[type="text"],
-input[type="submit"] {
-  width: 70%;
-  padding: 15px 70px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.item__label,
+.adiciona__botao {
+    width: 70%;
+    padding: 15px 70px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 input[type="submit"] {
