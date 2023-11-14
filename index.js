@@ -28,7 +28,7 @@ app.post('/', function(req,res){
 
 app.get('/', function(req,res){
     if(req.session.login){
-        res.render('p');
+        res.render('home');
     }else{
         res.render('index');
     }
