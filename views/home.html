@@ -3,37 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/style.css">
-    <title>Home</title>
+    <link rel="stylesheet" href="../index.js">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+    <link rel="stylesheet" href="../public/styles/style-home.css">
+    <title>Gerenciamento de Itens</title>
 </head>
-<body class="home">
-    <div class="home__div">
-        <h1 class="home__titulo">Gerenciamento de <strong>itens</strong></h1>
-        <form class="home__label">
-            <input type="text" name="item" class="item__label" placeholder="Adicione o item">
-            <input type="text" name="preco" class="item__label" placeholder="Adicione o valor">
-            <input type="submit" class="adiciona__botao" value="Adicionar">
-        </form>
+<body>
+    <header class="header">
+        <div class="logo">Gerenciamento dos Produtos</div>
+        <nav class="menu">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Produtos</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <section class="add-item">
+            <h2>Adicionar Item</h2>
+            <form id="addItemForm" class="item-form">
+                <label for="itemName" class="form-label">Nome do Item:</label>
+                <input type="text" id="itemName" class="form-input" placeholder="Digite o nome do item" required>
+
+                <label for="itemQuantity" class="form-label">Quantidade:</label>
+                <input type="number" id="itemQuantity" class="form-input" placeholder="Digite a quantidade" required>
+
+                <label for="itemCode" class="form-label">Código do Produto:</label>
+                <input type="text" id="itemCode" class="form-input" placeholder="Digite o código do produto" required>
+
+                <label for="itemPrice" class="form-label">Preço:</label>
+                <input type="text" id="itemPrice" class="form-input" placeholder="Digite o preço do item" required>
+
+                <button type="submit" class="form-button">Adicionar</button>
+            </form>
+        </section>
+
+        <section class="item-list">
+            <h2>Lista de Itens</h2>
+            <ul id="items" class="list"></ul>
+        </section>
     </div>
-    <ul id="items">
-    </ul>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('form').on('submit', function (e) {
-                e.preventDefault();
-                var item = $('input[name="item"]').val();
-                $('#items').append('<li>' + item + ' <button class="delete">X</button></li>');
-                $('input[name="item"]').val('');
-            });
-            
-            $('#items').on('click', '.delete', function () {
-                $(this).parent().remove();
-            });
+    <script> $(document).ready(function () {
+        $('#addItemForm').on('submit', function (e) {
+            e.preventDefault();
+    
+            var itemName = $('#itemName').val();
+            var itemQuantity = $('#itemQuantity').val();
+            var itemCode = $('#itemCode').val();
+            var itemPrice = $('#itemPrice').val();
+    
+            var newItem = `
+                <li class="list-item">
+                    <div class="item-details">
+                        <div>
+                            <strong>${itemName}</strong><br>
+                            Quantidade: ${itemQuantity}<br>
+                            Código: ${itemCode}
+                        </div>
+                        <div>
+                            Preço: R$ ${itemPrice}
+                        </div>
+                    </div>
+                    <button class="delete">Remover</button>
+                </li>
+            `;
+    
+            $('#items').append(newItem);
+    
+            // Limpar os campos do formulário
+            $('#itemName').val('');
+            $('#itemQuantity').val('');
+            $('#itemCode').val('');
+            $('#itemPrice').val('');
         });
-    </script>
-
-
+    
+        $('#items').on('click', '.delete', function () {
+            $(this).parent().remove();
+        });
+    });</script>
 </body>
 </html>
