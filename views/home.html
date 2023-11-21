@@ -15,7 +15,7 @@
             <ul>
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Produtos</a></li>
-                <li><a href="#">Contato</a></li>
+                <li><a href="#">Funcionários</a></li>
             </ul>
         </nav>
     </header>
@@ -29,11 +29,8 @@
                 <label for="itemQuantity" class="form-label">Quantidade:</label>
                 <input type="number" id="itemQuantity" class="form-input" placeholder="Digite a quantidade" required>
 
-                <label for="itemCode" class="form-label">Código do Produto:</label>
-                <input type="text" id="itemCode" class="form-input" placeholder="Digite o código do produto" required>
-
                 <label for="itemPrice" class="form-label">Preço:</label>
-                <input type="text" id="itemPrice" class="form-input" placeholder="Digite o preço do item" required>
+                <input type="float" id="itemPrice" class="form-input" placeholder="Digite o preço do item" required>
 
                 <button type="submit" class="form-button">Adicionar</button>
             </form>
@@ -53,18 +50,21 @@
             var itemName = $('#itemName').val();
             var itemQuantity = $('#itemQuantity').val();
             var itemCode = $('#itemCode').val();
-            var itemPrice = $('#itemPrice').val();
-    
-            var newItem = `
+            var itemPrice = ($('#itemPrice').val()).replace(",", ".");
+
+            var itemTotal = (parseFloat(itemPrice) * parseFloat(itemQuantity)).toFixed(2)   
+
+            var newItem = ` 
                 <li class="list-item">
                     <div class="item-details">
                         <div>
                             <strong>${itemName}</strong><br>
                             Quantidade: ${itemQuantity}<br>
-                            Código: ${itemCode}
+                            Código: 01
                         </div>
                         <div>
-                            Preço: R$ ${itemPrice}
+                            Preço: R$ ${itemPrice}<br>
+                            Valor total: R$ ${itemTotal}
                         </div>
                     </div>
                     <button class="delete">Remover</button>
