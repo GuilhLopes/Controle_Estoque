@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../index.js">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+    <link rel="stylesheet" href="/styles/style-home.css">
+    <title>Gerenciamento de Funcionários</title>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Gerenciamento dos Funcionários</div>
+        <nav class="menu">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Produtos</a></li>
+                <li><a href="#">Funcionários</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <section class="add-item">
+            <h2>Adicionar Funcionário</h2>
+            <form id="addItemForm" class="item-form">
+                <label for="userName" class="form-label">Nome:</label>
+                <input type="text" id="userName" class="form-input" placeholder="Digite o nome do funcionário" required>
+
+                <label for="userPassword" class="form-label">Senha do funcionário:</label>
+                <input type="text" id="userPassword" class="form-input" placeholder="Digite a senha do usuário" required>
+
+                <label for="userPhoneNumber" class="form-label">Número do celular:</label>
+                <input type="text" id="userPhoneNumber" class="form-input" placeholder="Digite o celular do funcionário" required>
+
+                <label for="userSalary" class="form-label">Salário:</label>
+                <input type="float" id="userSalary" class="form-input" placeholder="Digite o salário do funcionário" required>
+
+                <label for="userEmail" class="form-label">E-mail:</label>
+                <input type="text" id="userEmail" class="form-input" placeholder="Digite o e-mail do funcionário" required>
+
+                <button type="submit" class="form-button">Adicionar</button>
+            </form>
+        </section>
+
+        <section class="item-list">
+            <h2>Lista de Funcionários</h2>
+            <ul id="items" class="list"></ul>
+        </section>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script> $(document).ready(function () {
+        $('#addItemForm').on('submit', function (e) {
+            e.preventDefault();
+    
+            var userName = $('#userName').val();
+            var userPhoneNumber = $('#userPhoneNumber').val();
+            var userPassword = $('#userPassword').val();
+            var userEmail = $('#userEmail').val();
+            var userSalary = $('#userSalary').val();
+
+    
+            var newItem = `
+                <li class="list-item">
+                    <div class="item-details">
+                        <div>
+                            <strong>${userName}</strong><br>
+                            Celular: ${userPhoneNumber}<br>
+                            Senha: ${userPassword}
+                        </div>
+                        <div>
+                            E-mail: ${userEmail}<br>
+                            Salário: R$ ${userSalary}
+                        </div>
+                    </div>
+                    <button class="delete">Remover</button>
+                </li>
+            `;
+    
+            $('#items').append(newItem);
+    
+            // Limpar os campos do formulário
+            $('#userName').val('');
+            $('#userPhoneNumber').val('');
+            $('#userPassword').val('');
+            $('#userEmail').val('');
+            $('#userSalary').val('');
+        });
+    
+        $('#items').on('click', '.delete', function () {
+            $(this).parent().remove();
+        });
+    });</script>
+</body>
+</html>
