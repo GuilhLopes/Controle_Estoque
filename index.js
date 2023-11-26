@@ -26,6 +26,7 @@ app.post('/', function(req,res){
     }
 });
 
+
 app.get('/', function(req,res){
     if(req.session.login){
         res.render('home');
@@ -35,5 +36,5 @@ app.get('/', function(req,res){
 });
 
 app.listen(port, ()=>{
-    console.log('Site está rodando no localhost:3000');
+    console.log(`Site está rodando no localhost:${port}`);
 });
