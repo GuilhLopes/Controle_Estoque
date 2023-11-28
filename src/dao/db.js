@@ -1,6 +1,6 @@
-const db = require("pg");
+const { Pool } = require("pg");
 
-const cliente = new db.Client({
+const cliente = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'Controle_Estoque',
