@@ -13,7 +13,6 @@
         <div class="logo">Gerenciamento dos Produtos</div>
         <nav class="menu">
             <ul>
-                <li><a href="#">Home</a></li>
                 <li><a href="/produtos">Produtos</a></li>
                 <li><a href="/funcionarios">Funcionários</a></li>
             </ul>
@@ -38,6 +37,7 @@
 
         <section class="item-list">
             <h2>Lista de Itens</h2>
+            <input type="text" id="searchInput" class="form-input" placeholder="Pesquisar">
             <ul id="items" class="list"></ul>
         </section>
     </div>
@@ -129,9 +129,20 @@
 
             lista.remove();
         });
+        $('#searchInput').on('input', function () {
+                var searchValue = $(this).val().toLowerCase();
 
-    });
+                $('#items .list-item').each(function () {
+                    var itemText = $(this).text().toLowerCase();
 
+                    if (itemText.includes(searchValue)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
