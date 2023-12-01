@@ -13,7 +13,6 @@
         <div class="logo">Gerenciamento dos Funcionários</div>
         <nav class="menu">
             <ul>
-                <li><a href="#">Home</a></li>
                 <li><a href="#">Produtos</a></li>
                 <li><a href="#">Funcionários</a></li>
             </ul>
@@ -44,6 +43,7 @@
 
         <section class="item-list">
             <h2>Lista de Funcionários</h2>
+            <input type="text" id="searchInput" class="form-input" placeholder="Pesquisar">
             <ul id="items" class="list"></ul>
         </section>
     </div>
@@ -90,6 +90,19 @@
         $('#items').on('click', '.delete', function () {
             $(this).parent().remove();
         });
+        $('#searchInput').on('input', function () {
+                var searchValue = $(this).val().toLowerCase();
+
+                $('#items .list-item').each(function () {
+                    var itemText = $(this).text().toLowerCase();
+
+                    if (itemText.includes(searchValue)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
     });</script>
 </body>
 </html>
