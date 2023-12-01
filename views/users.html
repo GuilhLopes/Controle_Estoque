@@ -13,15 +13,15 @@
         <div class="logo">Gerenciamento dos Funcionários</div>
         <nav class="menu">
             <ul>
-                <li><a href="#">Produtos</a></li>
-                <li><a href="#">Funcionários</a></li>
+                <li><a href="/produtos">Produtos</a></li>
+                <li><a href="/funcionarios">Funcionários</a></li>
             </ul>
         </nav>
     </header>
     <div class="container">
         <section class="add-item">
             <h2>Adicionar Funcionário</h2>
-            <form id="addItemForm" class="item-form">
+            <form id="addItemForm" class="item-form" method="post">
                 <label for="userName" class="form-label">Nome:</label>
                 <input type="text" id="userName" class="form-input" placeholder="Digite o nome do funcionário" required>
 
@@ -49,7 +49,41 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script> $(document).ready(function () {
+    <script> 
+    
+        function usuarios(){
+
+            document.getElementById('items').innerHTML = "";
+
+            fetch('/recUsuarios')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(element => {
+                    var newItem = `
+                    <li class="list-item" data-id="${element.id}">
+                        <div class="item-details">
+                            <div>
+                                <strong>${element.nome}</strong><br>
+                                Celular: ${element.telefone}<br>
+                                Senha: ${element.senha}<br>
+                                Codigo: ${element.id}
+                            </div>
+                            <div>
+                                E-mail: ${element.email}<br>
+                                Salário: R$ ${element.salario}
+                            </div>
+                        </div>
+                        <button class="delete">Remover</button>
+                    </li>
+                    `;
+    
+                    $('#items').append(newItem);
+                });
+            });
+        }
+
+        $(document).ready(function () {
+            usuarios();
         $('#addItemForm').on('submit', function (e) {
             e.preventDefault();
     
@@ -59,25 +93,24 @@
             var userEmail = $('#userEmail').val();
             var userSalary = $('#userSalary').val();
 
-    
-            var newItem = `
-                <li class="list-item">
-                    <div class="item-details">
-                        <div>
-                            <strong>${userName}</strong><br>
-                            Celular: ${userPhoneNumber}<br>
-                            Senha: ${userPassword}
-                        </div>
-                        <div>
-                            E-mail: ${userEmail}<br>
-                            Salário: R$ ${userSalary}
-                        </div>
-                    </div>
-                    <button class="delete">Remover</button>
-                </li>
-            `;
-    
-            $('#items').append(newItem);
+            fetch('/funcionarios', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nome: userName,
+                    senha: userPassword,
+                    telefone: userPhoneNumber,
+                    salario: userSalary,
+                    email: userEmail
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Product added successfully:', data)});
+
+            usuarios();
     
             // Limpar os campos do formulário
             $('#userName').val('');
@@ -88,7 +121,23 @@
         });
     
         $('#items').on('click', '.delete', function () {
-            $(this).parent().remove();
+            var lista = $(this).parent();
+
+            var itemid = lista.data('id');
+            
+            fetch('/funcionarios', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }, body: JSON.stringify({
+                    id: itemid
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Product added successfully:', data)});
+
+            lista.remove();
         });
         $('#searchInput').on('input', function () {
                 var searchValue = $(this).val().toLowerCase();
@@ -103,6 +152,7 @@
                     }
                 });
             });
-    });</script>
+    });
+    </script>
 </body>
 </html>

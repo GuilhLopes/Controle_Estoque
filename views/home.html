@@ -13,23 +13,23 @@
         <div class="logo">Gerenciamento dos Produtos</div>
         <nav class="menu">
             <ul>
-                <li><a href="#">Produtos</a></li>
-                <li><a href="#">Funcionários</a></li>
+                <li><a href="/produtos">Produtos</a></li>
+                <li><a href="/funcionarios">Funcionários</a></li>
             </ul>
         </nav>
     </header>
     <div class="container">
         <section class="add-item">
             <h2>Adicionar Item</h2>
-            <form id="addItemForm" class="item-form">
+            <form id="addItemForm" class="item-form" method="post">
                 <label for="itemName" class="form-label">Nome do Item:</label>
-                <input type="text" id="itemName" class="form-input" placeholder="Digite o nome do item" required>
+                <input type="text" id="itemName" name="nome" class="form-input" placeholder="Digite o nome do item" required>
 
                 <label for="itemQuantity" class="form-label">Quantidade:</label>
-                <input type="number" id="itemQuantity" class="form-input" placeholder="Digite a quantidade" required>
+                <input type="number" id="itemQuantity" name="quantidade" class="form-input" placeholder="Digite a quantidade" required>
 
                 <label for="itemPrice" class="form-label">Preço:</label>
-                <input type="float" id="itemPrice" class="form-input" placeholder="Digite o preço do item" required>
+                <input type="float" id="itemPrice" name="price" class="form-input" placeholder="Digite o preço do item" required>
 
                 <button type="submit" class="form-button">Adicionar</button>
             </form>
@@ -41,37 +41,67 @@
             <ul id="items" class="list"></ul>
         </section>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script> $(document).ready(function () {
+    <script> 
+
+        function produtos(){
+
+        document.getElementById('items').innerHTML = "";
+
+        fetch('/recProdutos')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(element => {
+                var newItem = `
+                <li class="list-item" data-id="${element.id}">
+                        <div class="item-details">
+                            <div>
+                                <strong>${element.nome}</strong><br>
+                                Quantidade: ${element.quantidade}<br>
+                                Código: ${element.id}
+                            </div>
+                            <div>
+                                Preço: R$ ${element.preco}<br>
+                                Valor total: R$ ${element.preco * element.quantidade}
+                            </div>
+                        </div>
+                        <button class="delete">Remover</button>
+                    </li>
+                    `;
+                    $('#items').append(newItem);
+                });
+            });
+        }
+
+        $(document).ready(function () {
+            produtos();
         $('#addItemForm').on('submit', function (e) {
             e.preventDefault();
-    
+
             var itemName = $('#itemName').val();
             var itemQuantity = $('#itemQuantity').val();
             var itemCode = $('#itemCode').val();
             var itemPrice = ($('#itemPrice').val()).replace(",", ".");
-
-            var itemTotal = (parseFloat(itemPrice) * parseFloat(itemQuantity)).toFixed(2)   
-
-            var newItem = ` 
-                <li class="list-item">
-                    <div class="item-details">
-                        <div>
-                            <strong>${itemName}</strong><br>
-                            Quantidade: ${itemQuantity}<br>
-                            Código: 01
-                        </div>
-                        <div>
-                            Preço: R$ ${itemPrice}<br>
-                            Valor total: R$ ${itemTotal}
-                        </div>
-                    </div>
-                    <button class="delete">Remover</button>
-                </li>
-            `;
     
-            $('#items').append(newItem);
+
+            var itemTotal = (parseFloat(itemPrice) * parseFloat(itemQuantity)).toFixed(2) 
+            
+            fetch('/produtos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nome: itemName,
+                    quantidade: itemQuantity,
+                    preco: itemPrice
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Product added successfully:', data)});
+
+            produtos();
     
             // Limpar os campos do formulário
             $('#itemName').val('');
@@ -81,7 +111,23 @@
         });
     
         $('#items').on('click', '.delete', function () {
-            $(this).parent().remove();
+            var lista = $(this).parent();
+
+            var itemid = lista.data('id');
+            
+            fetch('/produtos', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }, body: JSON.stringify({
+                    id: itemid
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Product added successfully:', data)});
+
+            lista.remove();
         });
         $('#searchInput').on('input', function () {
                 var searchValue = $(this).val().toLowerCase();
